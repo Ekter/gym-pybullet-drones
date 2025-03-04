@@ -123,13 +123,13 @@ class Logger(object):
     def save(self):
         """Save the logs to file.
         """
-        with open(os.path.join(self.OUTPUT_FOLDER, "save-flight-"+datetime.now().strftime("%m.%d.%Y_%H.%M.%S")+".npy"), 'wb') as out_file:
-            np.savez(out_file, timestamps=self.timestamps, states=self.states, controls=self.controls)
+        with open(os.path.join(self.OUTPUT_FOLDER, "save-flight-"+datetime.now().strftime("%m.%d.%Y_%H.%M.%S")+".npz"), 'wb') as out_file:
+            np.savez(out_file,allow_pickle=False, timestamps=self.timestamps, states=self.states, controls=self.controls)
 
     ################################################################################
 
     def save_as_csv(self,
-                    comment: str=""
+                    comment: str="",
                     ):
         """Save the logs---on your Desktop---as comma separated values.
 
@@ -137,7 +137,6 @@ class Logger(object):
         ----------
         comment : str, optional
             Added to the foldername.
-
         """
         csv_dir = os.path.join(self.OUTPUT_FOLDER, "save-flight-"+comment+"-"+datetime.now().strftime("%m.%d.%Y_%H.%M.%S"))
         if not os.path.exists(csv_dir):
