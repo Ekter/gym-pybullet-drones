@@ -124,7 +124,7 @@ def run(
         t = i/env.CTRL_FREQ
         #### Step the simulation ###################################
         obs, reward, terminated, truncated, info = env.step(action, i)
-        
+
         if t > env.TRAJ_TIME:
             for j in range(num_drones):
                 try:
@@ -136,7 +136,7 @@ def run(
                                                     )
                 except:
                     break
-        
+
 
         #### Log the simulation ####################################
         for j in range(num_drones):

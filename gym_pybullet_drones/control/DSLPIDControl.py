@@ -45,7 +45,7 @@ class DSLPIDControl(BaseControl):
         self.MIN_PWM = 20000
         self.MAX_PWM = 65535
         if self.DRONE_MODEL == DroneModel.CF2X:
-            self.MIXER_MATRIX = np.array([ 
+            self.MIXER_MATRIX = np.array([
                                     [-.5, -.5, -1],
                                     [-.5,  .5,  1],
                                     [.5, .5, -1],
@@ -257,7 +257,7 @@ class DSLPIDControl(BaseControl):
         pwm = thrust + np.dot(self.MIXER_MATRIX, target_torques)
         pwm = np.clip(pwm, self.MIN_PWM, self.MAX_PWM)
         return self.PWM2RPM_SCALE * pwm + self.PWM2RPM_CONST
-    
+
     ################################################################################
 
     def _one23DInterface(self,
