@@ -45,7 +45,7 @@ class Logger(object):
         self.LOGGING_FREQ_HZ = logging_freq_hz
         self.NUM_DRONES = num_drones
         self.PREALLOCATED_ARRAYS = False if duration_sec == 0 else True
-        self.counters = np.zeros(num_drones)
+        self.counters = np.zeros(num_drones, dtype=np.int32)
         self.timestamps = np.zeros((num_drones, duration_sec*self.LOGGING_FREQ_HZ))
         #### Note: this is the suggest information to log ##############################
         self.states = np.zeros((num_drones, 16, duration_sec*self.LOGGING_FREQ_HZ)) #### 16 states: pos_x,
@@ -68,7 +68,7 @@ class Logger(object):
         self.controls = np.zeros((num_drones, 12, duration_sec*self.LOGGING_FREQ_HZ)) #### 12 control targets: pos_x,
                                                                                                              # pos_y,
                                                                                                              # pos_z,
-                                                                                                             # vel_x, 
+                                                                                                             # vel_x,
                                                                                                              # vel_y,
                                                                                                              # vel_z,
                                                                                                              # roll,
@@ -98,7 +98,6 @@ class Logger(object):
             (20,)-shaped array of floats containing the drone's state.
         control : ndarray, optional
             (12,)-shaped array of floats containing the drone's control target.
-
         """
         if drone < 0 or drone >= self.NUM_DRONES or timestamp < 0 or len(state) != 20 or len(control) != 12:
             print("[ERROR] in Logger.log(), invalid data")
@@ -115,10 +114,17 @@ class Logger(object):
         self.timestamps[drone, current_counter] = timestamp
         #### Re-order the kinematic obs (of most Aviaries) #########
         self.states[drone, :, current_counter] = np.hstack([state[0:3], state[10:13], state[7:10], state[13:20]])
-        self.controls[drone, :, current_counter] = control
-        self.counters[drone] = current_counter + 1
+        # self.controls[drone, :, current_counter] = control
+        self.counters[drone] +=1 # current_counter + 1
 
     ################################################################################
+
+    def save_with_config(self, config = None):
+        """
+        Save the logs to several files with config.
+        """
+        for i in range(self.NUM_DRONES):
+            np.savez(f"{self.OUTPUT_FOLDER}/flight-{i}-.npz",config=config, timestamps=self.timestamps, states=self.states[i])
 
     def save(self):
         """Save the logs to file.
