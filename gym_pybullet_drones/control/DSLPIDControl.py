@@ -243,7 +243,7 @@ class DSLPIDControl(BaseControl):
         w,x,y,z = target_quat
         target_rotation = (Rotation.from_quat([w, x, y, z])).as_matrix()
         rot_matrix_e = np.dot((target_rotation.transpose()),cur_rotation) - np.dot(cur_rotation.transpose(),target_rotation)
-        rot_e = np.array([rot_matrix_e[2, 1], rot_matrix_e[0, 2], rot_matrix_e[1, 0]]) 
+        rot_e = np.array([rot_matrix_e[2, 1], rot_matrix_e[0, 2], rot_matrix_e[1, 0]])
         rpy_rates_e = target_rpy_rates - (cur_rpy - self.last_rpy)/control_timestep
         self.last_rpy = cur_rpy
         self.integral_rpy_e = self.integral_rpy_e - rot_e*control_timestep
