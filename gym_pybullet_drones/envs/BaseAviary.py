@@ -503,7 +503,7 @@ class BaseAviary(gym.Env):
             # p.setCollisionFilterPair(bodyUniqueIdA=self.PLANE_ID, bodyUniqueIdB=self.DRONE_IDS[i], linkIndexA=-1, linkIndexB=-1, enableCollision=0, physicsClientId=self.CLIENT)
         if self.OBSTACLES:
             self._addObstacles()
-    
+
     ################################################################################
 
     def _updateAndStoreKinematicInformation(self):
@@ -517,7 +517,7 @@ class BaseAviary(gym.Env):
             self.pos[i], self.quat[i] = p.getBasePositionAndOrientation(self.DRONE_IDS[i], physicsClientId=self.CLIENT)
             self.rpy[i] = p.getEulerFromQuaternion(self.quat[i])
             self.vel[i], self.ang_v[i] = p.getBaseVelocity(self.DRONE_IDS[i], physicsClientId=self.CLIENT)
-    
+
     ################################################################################
 
     def _startVideoRecording(self):
