@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import numpy.typing as npt
 import xml.etree.ElementTree as etxml
 import pkg_resources
 
@@ -53,13 +54,13 @@ class BaseControl(object):
     ################################################################################
 
     def computeControlFromState(self,
-                                control_timestep,
-                                state,
-                                target_pos,
-                                target_rpy=np.zeros(3),
-                                target_vel=np.zeros(3),
-                                target_rpy_rates=np.zeros(3)
-                                ):
+                                control_timestep: float,
+                                state:  npt.NDArray[np.float64],
+                                target_pos: npt.NDArray[np.float64],
+                                target_rpy: npt.NDArray[np.float64]=np.zeros(3),
+                                target_vel: npt.NDArray[np.float64]=np.zeros(3),
+                                target_rpy_rates: npt.NDArray[np.float64]=np.zeros(3)
+                                ) -> npt.NDArray[np.float64]:
         """Interface method using `computeControl`.
 
         It can be used to compute a control action directly from the value of key "state"

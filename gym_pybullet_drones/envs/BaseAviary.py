@@ -9,6 +9,7 @@ from PIL import Image
 # import pkgutil
 # egl = pkgutil.get_loader('eglRenderer')
 import numpy as np
+import numpy.typing as npt
 import pybullet as p
 import pybullet_data
 import gymnasium as gym
@@ -257,8 +258,8 @@ class BaseAviary(gym.Env):
     ################################################################################
 
     def step(self,
-             action
-             ):
+             action: npt.NDArray[np.float64]
+             ) -> tuple[npt.NDArray[np.float64]]:
         """Advances the environment by one simulation step.
 
         Parameters
