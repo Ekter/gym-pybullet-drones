@@ -77,6 +77,7 @@ class Logger(object):
         """
         for i in range(self.NUM_DRONES):
             np.savez(f"{self.OUTPUT_FOLDER}/flight-{i}.npz",config=config, timestamps=self.timestamps, states=self.states[i,:12,:], controls=self.states[i,12:,:])
+            print(f"saved: {self.OUTPUT_FOLDER}/flight-{i}.npz")
 
     def save(self):
         """Save the logs to file.

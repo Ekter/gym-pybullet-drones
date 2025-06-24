@@ -551,7 +551,7 @@ class BaseAviary(gym.Env):
 
         Returns
         -------
-        ndarray 
+        ndarray
             (20,)-shaped array of floats containing the state vector of the n-th drone.
             Check the only line in this method and `_updateAndStoreKinematicInformation()`
             to understand its format.
